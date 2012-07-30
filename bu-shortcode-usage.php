@@ -3,7 +3,7 @@
 Plugin Name: Shortcode Usage
 Plugin URI: http://jonasnordstrom.se/plugins/shortcode-usage/
 Description: With this plugin you can search through all content and list the posts, pages and CPTs that use a specific shortcode, with direct links to edit each post.
-Version: 0.3
+Version: 0.4
 Author: Jonas Nordstrom
 Author URI: http://jonasnordstrom.se/
 */
@@ -120,6 +120,18 @@ class BuShortcodeUsage {
 				<input type="hidden" name="action" value="su-search" />
 				<input type="submit" value="<?php _e('Search', 'busu');?>" />
 			</form>
+			
+			<h3>Registered shortcodes</h3>
+			<?php
+			global $shortcode_tags;
+			foreach ($shortcode_tags as $shortcode => $function ) : ?>
+				<p>
+					<a href="<?php echo esc_url(get_admin_url() . 
+						'tools.php?page=shortcode-usage&shortcode=' . 
+						$shortcode . 
+						'&action=su-search'); ?>"><?php echo $shortcode; ?></a>
+				</p>
+			<?php endforeach; ?>
 		</div>
 		<?php
 	}
@@ -127,4 +139,3 @@ class BuShortcodeUsage {
 $bu_shortcode_usage = new BuShortcodeUsage();
 
 add_action( 'admin_menu', array(&$bu_shortcode_usage, 'init') );
-
